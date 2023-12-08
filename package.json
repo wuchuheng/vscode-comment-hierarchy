@@ -55,5 +55,6 @@
   "repository": {
     "url": "https://github.com/wuchuheng/vscode-comment-hierarchy",
     "type": "git"
-  }
+  },
+  "publisher": "numerical comment"
 }
