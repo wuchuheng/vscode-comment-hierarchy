@@ -1,71 +1,59 @@
-# numerical-comment README
+**Comment Hierarchy for VS Code**
 
-This is the README for your extension "numerical-comment". After writing up a brief description, we recommend including the following sections.
+Enhance your coding experience with Comment Hierarchy, a VS Code extension that automatically numbers your comment lines based on their nesting level, providing a clear and organized structure to your code annotations.
 
-## Features
+**Features:**
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- **Automatic Numbering**: Automatically adds hierarchical numbering to your comments as you type.
+- **Customizable Formats**: Choose from various numbering formats to match your coding style.
+- **Multilanguage Support**: Works with multiple programming languages.
+- **Toggle On/Off**: Easily toggle hierarchical comments on or off with a simple command.
 
-For example if there is an image subfolder under your extension project workspace:
+**Usage:**
 
-\!\[feature X\]\(images/feature-x.png\)
+After installation, Comment Hierarchy will automatically number new comments. Use the command palette (`Ctrl+Shift+P`) and search for "Toggle Comment Hierarchy" to enable or disable the feature.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+**Examples:**
 
-## Requirements
+Before:
+```javascript
+// # This is a top-level comment
+// ## This is a nested comment
+// ### This is a deeply nested comment
+```
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+After:
+```javascript
+// 1 This is a top-level comment
+// 1.1 This is a nested comment
+// 1.1.1 This is a deeply nested comment
+```
 
-## Extension Settings
+**Requirements:**
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+No additional requirements. Works out of the box with VS Code.
 
-For example:
+**Extension Settings:**
 
-This extension contributes the following settings:
+- `commentHierarchy.numberingStyle`: Choose your preferred numbering style.
+- `commentHierarchy.enabled`: Enable or disable numbering by default.
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+**Known Issues:**
 
-## Known Issues
+- Currently does not support block comments. See issue #10 on GitHub.
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+**Release Notes:**
 
-## Release Notes
+For detailed release notes, check out the [CHANGELOG](https://github.com/wuchuheng/vscode-numerical-comment/CHANGELOG.md).
 
-Users appreciate release notes as you update your extension.
+**Contributing:**
 
-### 1.0.0
+Contributions are welcome! Please see our [CONTRIBUTING](https://github.com/wuchuheng/vscode-numerical-comment/CONTRIBUTING.md) guide.
 
-Initial release of ...
+**License:**
 
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+Distributed under the MIT License. See [LICENSE](https://github.com/wuchuheng/vscode-numerical-comment/LICENSE) for more information.
 
 ---
 
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Remember to replace URLs and specific details with your actual information. When your description is ready, you will include it in your extension's `package.json` under the `description` field and also as part of the `README.md`, which the VS Code Marketplace will render as the extension's detailed description page.
