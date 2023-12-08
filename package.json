@@ -2,12 +2,17 @@
   "name": "numerical-comment",
   "displayName": "numerical comment",
   "description": "structured commands",
+  "author": "wuchuheng",
+  "repository": {
+    "url": "https://github.com/wuchuheng/vscode-comment-hierarchy",
+    "type": "git"
+  },
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.85.0"
   },
   "categories": [
-    "Other"
+    "Formatters"
   ],
   "activationEvents": [
     "onStartupFinished"
