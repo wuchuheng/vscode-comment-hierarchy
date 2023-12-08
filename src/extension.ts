@@ -24,6 +24,13 @@ const hideDecorationType = vscode.window.createTextEditorDecorationType({
 	rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed,
 });
 
+let timeout: NodeJS.Timeout;
+function triggerUpdateDecorations() {
+	if (timeout) {
+		clearTimeout(timeout);
+	}
+	timeout = setTimeout(updateDecorations, 100);
+}
 
 function updateDecorations() {
 	const activeEditor = vscode.window.activeTextEditor;
@@ -73,7 +80,7 @@ function updateDecorations() {
 				after: {
 					contentText: numberComment,
 					color: new vscode.ThemeColor('editorLineNumber.foreground'), // Use theme color for compatibility
-					margin: `0 0 0 -${currentLevelNumberList.length * .6}em`
+					margin: `0 0 0 -${capturedChars.length}ch` // <-- what is the size of the font is crector? 
 				},
 			},
 		};
@@ -108,18 +115,18 @@ export function activate(context: vscode.ExtensionContext) {
     // * Handle active file changed
     vscode.window.onDidChangeActiveTextEditor(async editor => {
 		log("onDidChangeActiveTextEditor");
-		editor && updateDecorations();
+		editor && triggerUpdateDecorations();
     }, null, context.subscriptions);
 
     // * Handle file contents changed
     vscode.workspace.onDidChangeTextDocument(event => {
 		log("ChangeTextDocument");
-		vscode.window.activeTextEditor && event.document === vscode.window.activeTextEditor.document && updateDecorations();
+		vscode.window.activeTextEditor && event.document === vscode.window.activeTextEditor.document && triggerUpdateDecorations();
     }, null, context.subscriptions);
 
 	vscode.workspace.onDidOpenTextDocument(event => {
 		log("onDidOpenTextDocument");
-		updateDecorations();
+		triggerUpdateDecorations();
 	}, null, context.subscriptions);
 
 }
