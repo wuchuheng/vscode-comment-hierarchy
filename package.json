@@ -46,8 +46,12 @@
     "@vscode/test-cli": "^0.0.4",
     "@vscode/test-electron": "^2.3.8"
   },
+  "icon": "icon.png",
   "license": "MIT",
-  "author": "wuchuheng",
+  "author": {
+    "name": "wuchuheng",
+    "email": "root@wuchuheng.com"
+  },
   "repository": {
     "url": "https://github.com/wuchuheng/vscode-comment-hierarchy",
     "type": "git"
