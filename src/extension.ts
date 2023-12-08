@@ -3,6 +3,13 @@
 import { log } from 'console';
 import * as vscode from 'vscode';
 
+type CommentBranch = {
+	parent?: CommentBranch
+	prev?: CommentBranch
+	levelNum: number
+	charsLength: number
+	subBranches: CommentBranch[]
+};
 
 const decorationType = vscode.window.createTextEditorDecorationType({
 	// Define the styling here
@@ -31,16 +38,13 @@ function updateDecorations() {
 
 	let match;
 
-	type CommentBranch = {
-		parent?:CommentBranch
-		prev?: CommentBranch
-		levelNum: number
-		charsLength: number
-		subBranches: CommentBranch[]
-	}
 	let prevLevelNumberList: number[] = [];
 	while ((match = regEx.exec(text))) {
 		const startPos = activeEditor.document.positionAt(match.index);
+		const cursorPosition = activeEditor.selection.start;
+		if (cursorPosition.line === startPos.line) { 
+			continue; 
+		}
 		const endPos = activeEditor.document.positionAt(match.index + match[0].length);
 		const capturedChars: string = match[2];
 		let currentLevelNumberList: number[] = [];
@@ -62,7 +66,7 @@ function updateDecorations() {
 		}
 		const numberComment = currentLevelNumberList.join('.');
 		prevLevelNumberList = currentLevelNumberList;
-		// if the commentBranch not undifind, 
+		// set the numberical comments
 		const decoration: vscode.DecorationOptions = {
 			range: new vscode.Range(startPos, endPos),
 			renderOptions: {
@@ -112,7 +116,6 @@ export function activate(context: vscode.ExtensionContext) {
 		log("ChangeTextDocument");
 		vscode.window.activeTextEditor && event.document === vscode.window.activeTextEditor.document && updateDecorations();
     }, null, context.subscriptions);
-
 
 	vscode.workspace.onDidOpenTextDocument(event => {
 		log("onDidOpenTextDocument");
