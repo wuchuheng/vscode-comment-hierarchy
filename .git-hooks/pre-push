@@ -1,75 +1,46 @@
 #!/bin/bash
 
-##
-# check the tag name in the file provide was existed or not
-# @use check_tag_name_exists <tag name> <file path>
-##
-function check_tag_name_exists() {
-    local tagName=$1;
-    local filePath=$2;
-    local isTagNameExists=$( cat "${filePath}" | grep "${tagName}");
-    if [[ -z ${isTagNameExists} ]]; then
-	echo "The tag name: ${tagName} was not existed in ${filePath}";
-	exit 1
-    fi
-}
+ALL_LOCAL_TAGS=($(git tag))
+
+. scripts/common.sh # {check_tag_name_exited_in_change_log}
 
 ##
-# check the tag name in CHANGELOG.md
-# @use check_tag_name_in_changelog_me <tag name>
+# @Sumary check the branch name is existed in the local tags
+# @params --branch-name {string} the branch name
+# @return <boolean>
 ##
-function check_tag_name_in_changelog_me() {
-    # get the CHANGELOG.md from curreng tag name.
-    # Navigate to the root of the repository
-    REPO_ROOT=$(git rev-parse --show-toplevel)
-    cd "$REPO_ROOT"
-
-    # Get the contents of the CHANGELOG.md at the given tag
-    CHANGELOG_CONTENT=$(git show "$tag_name:CHANGELOG.md")
-    lastTagNameInChangeLog=$( echo "${CHANGELOG_CONTENT}" | grep '^## ' | tail -n 1 | cut -d ' ' -f 2 )
-    echo "Check the tag name: ${tag_name}."
-
-    # Check if the CHANGELOG.md has the change log for tag name
-    if ! [[ "${tag_name}" == "v${lastTagNameInChangeLog}" ]]; then
-        echo "Tag name $tag_name was not existed in CHANGELOG.md', please to add the change log for the tag name ${tag_name}. look like the belowing code:"
-        cat <<EOF
-## ${tag_name:1}
-- feat: add some features for ${tag_name}
-- fix: fix some issue for ${tag_name}
-- chore: something unimportan.
-
-EOF
-            exit 1
+function check_branch_name_is_tag_name() {
+    local branch_name=''
+    for i in $@; do
+        case $i in
+            --branch-name) 
+                branch_name=$2; 
+                shift 2
+            ;;
+            *) 
+                [[ -n $1 ]] && shift
+            ;;
+        esac
+    done
+    # check the branch name was existed or not in the local tags
+    for local_tag in ${ALL_LOCAL_TAGS[@]}; do
+        if [[ $local_tag == $branch_name ]]; then
+            return 0
         fi
-    
+    done
+    return 1
 }
 
-##
-# Check the tag name is valid 
-# @use check_tag_name_valid <tag name>
-##
-function check_tag_name_valid() {
-    # Check if tag name fits the pattern
-    if ! [[ $tag_name =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
-    then
-        echo "Tag name $tag_name does not match the pattern 'vX.Y.Z'"
-        exit 1
-    fi
-}
-
+# Read from stdin to get the name of the branch being pushed
 while read local_ref local_sha remote_ref remote_sha
 do
-    # Check if we are pushing tags
-    if [[ $local_ref == refs/tags/* ]]; then
-        # Extract the tag name
-        tag_name=${local_ref#refs/tags/}
-        check_tag_name_valid "${tag_name}"
-        check_tag_name_in_changelog_me "${tag_name}"
-        check_tag_name_exists "${tag_name}" "README.md"
-        check_tag_name_exists "${tag_name}" ".github/workflows/test.yaml"
-        check_tag_name_exists "${tag_name}" "src/tools/install.sh"
+  # Extract the local and remote branch names
+  local_branch=$(echo $local_ref | sed -e 's,.*/\(.*\),\1,')
+  # check the local branch name was existed or not in the local tags
+    check_branch_name_is_tag_name --branch-name $local_branch
+    if [[ $? == 0 ]]; then
+        tagName="${local_branch}"
+        echo "Detected that you are pushing a tag named ${tagName}"
+        check_tag_name_exited_in_change_log --tag-name "$tagName"
     fi
 done
-
-
-
