@@ -1,0 +1,11 @@
+#!/bin/sh
+
+echo "hello"
+# Check if a tag was created in this commit
+if git describe --exact-match --tags HEAD 2>/dev/null; then
+    # A tag was created, execute your script
+    echo "hello"
+    exit 1
+    check_tag_name_in_changelog_me
+fi
+
