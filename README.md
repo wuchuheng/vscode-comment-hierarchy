@@ -16,6 +16,7 @@ After installation, Comment Hierarchy will automatically number new comments. Us
 **Examples:**
 
 Before:
+
 ```javascript
 // # This is a top-level comment
 // ## This is a nested comment
@@ -23,6 +24,7 @@ Before:
 ```
 
 After:
+
 ```javascript
 // 1 This is a top-level comment
 // 1.1 This is a nested comment
