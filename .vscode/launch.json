@@ -6,6 +6,14 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"type": "bashdb",
+			"request": "launch",
+			"name": "Git-hooks-pre-push-debug",
+			"cwd": "${workspaceFolder}",
+			"program": "${workspaceFolder}/.git-hooks/pre-push",
+			"args": []
+		},
+		{
 			"name": "Run Extension",
 			"type": "extensionHost",
 			"request": "launch",
@@ -16,6 +24,6 @@
 				"${workspaceFolder}/dist/**/*.js"
 			],
 			"preLaunchTask": "${defaultBuildTask}"
-		}
+		},
 	]
 }
