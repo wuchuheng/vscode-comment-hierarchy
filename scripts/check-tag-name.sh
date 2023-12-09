@@ -77,12 +77,7 @@ function check_tag_name_exited_in_change_log() {
     done
     tagName=${tagName:1}
 
-
-
-    local REPO_ROOT=$(git rev-parse --show-toplevel)
-    cd "$REPO_ROOT"
-
-    local lineNumWithTagNameTxt=$(git show "$tagName:${changeLogFile}" | grep -En "^##\s+\[\d+\.\d+\.\d+\]" )
+    local lineNumWithTagNameTxt=$(  git show HEAD:${changeLogFile}  | grep -En "^##\s+\[\d+\.\d+\.\d+\]" )
     local preTagName=''
     # to split the lineNumWithTagNameTxt with \n
     IFS=$'\n' read -d '' -ra lineNumWithTagNameList <<<"$lineNumWithTagNameTxt" || true
@@ -106,4 +101,7 @@ function check_tag_name_exited_in_change_log() {
 check_tag_name_valid --tag-name "${tagName}"
 
 check_tag_name_exited_in_change_log --tag-name "${tagName}"
+
+# print the OK message in green color
+echo -e "\033[32mTag name: ${tagName} OK\033[0m"
 
