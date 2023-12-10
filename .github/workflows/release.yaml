@@ -9,20 +9,22 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
-              uses: actions/checkout@v2
-            - name: echo hello
-              run: |
-                echo "hello"
+              uses: actions/checkout@v3
             - name: Setup Node.js environment
               uses: actions/setup-node@v2
               with:
                 node-version: '20'
             - name: Install dependencies
-              run: npm ci
+              run: npm install
             - name: Run tests
               run: npm test
-            - name: Package Extension
-              run: vsce package
+            - name: Run prepushish 
+              run: npm run vscode:prepublish
+            - name: Install vsce
+              run: npm run pnpm install -g @vscode/vsce
+            - name: Package the vscode estension
+              run: |
+                vsce package && ls -ahl
             # - name: Publish to Marketplace
             #   uses: HaaLeo/publish-vscode-extension@v0
             #   with:
