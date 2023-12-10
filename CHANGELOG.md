@@ -6,7 +6,9 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
-- Add a gif to show how the exstention works.
+## [0.0.5] - 2023-12-10
+
+- Add a demo gif in README.md
 
 ## [0.0.4] - 2019-02-15
 
