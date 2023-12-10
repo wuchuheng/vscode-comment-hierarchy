@@ -6,7 +6,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
-- Initial release
+- Add a gif to show how the exstention works.
 
 ## [0.0.4] - 2019-02-15
 

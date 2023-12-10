@@ -4,6 +4,8 @@ Enhance your coding experience with Comment Hierarchy, a VS Code extension that 
 
 **Features:**
 
+![Alt text](src/assets/demo.gif)
+
 - **Automatic Numbering**: Automatically adds hierarchical numbering to your comments as you type.
 - **Customizable Formats**: Choose from various numbering formats to match your coding style.
 - **Multilanguage Support**: Works with multiple programming languages.
