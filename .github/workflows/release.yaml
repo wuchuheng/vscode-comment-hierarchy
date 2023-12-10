@@ -26,9 +26,21 @@ jobs:
             - name: Package the vscode estension
               run: |
                 vsce package && ls -ahl
-            - name: Login publisher
-              run: 
-                echo ${{ secrets.VSCODE_PUBLISHER_TOKEN }} |  vsce login numericalcomment 
+              
+            - name: Publish to Open VSX Registry
+              uses: HaaLeo/publish-vscode-extension@v1
+              with:
+                pat: ${{ secrets.VSCODE_PUBLISHER_TOKEN }}
+            - name: Publish to Visual Studio Marketplace
+              uses: HaaLeo/publish-vscode-extension@v1
+              with:
+                pat: ${{ secrets.VSCODE_PUBLISHER_TOKEN }}
+                registryUrl: https://marketplace.visualstudio.com
+
+
+
+
+
             # - name: Publish to Marketplace
             #   uses: HaaLeo/publish-vscode-extension@v0
             #   with:
