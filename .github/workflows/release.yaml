@@ -22,7 +22,7 @@ jobs:
             - name: Run prepushish 
               run: npm run vscode:prepublish
             - name: Install vsce
-              run: npm run pnpm install -g @vscode/vsce
+              run: npm install -g @vscode/vsce
             - name: Package the vscode estension
               run: |
                 vsce package && ls -ahl
