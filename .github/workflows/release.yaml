@@ -26,6 +26,8 @@ jobs:
             - name: Package the vscode estension
               run: |
                 vsce package && ls -ahl
+            - name: Login publisher
+              run: echo ${ secrets.VSCODE_PUBLISHER_TOKEN } |  vsce login numericalcomment 
             # - name: Publish to Marketplace
             #   uses: HaaLeo/publish-vscode-extension@v0
             #   with:
